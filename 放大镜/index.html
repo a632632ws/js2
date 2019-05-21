@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+         * {
+             border:0;
+             padding: 0;
+             margin: 0;
+            
+         }                        
+      
+         .box {
+            width: 1200px;
+            height: 700px;
+            border: 1px solid #000;
+            margin: 100px;
+         }
+         .min{
+            float: left;
+            position: relative;
+            width: 400px;
+            height: 400px;
+            
+         }
+        
+        .max {
+         width: 400px;
+        height: 400px; 
+        overflow: hidden; 
+        float: right;
+        display: none;   
+        border: 1px solid red
+         }
+         .img {
+            
+           position: relative;
+         }
+
+         .box3 {
+             width: 100px;
+             height: 100px;
+             background-color: rgba(0,0,0,0.3);
+             position: absolute;
+             left: 0;
+             top: 0;
+             display: none;
+             
+         }
+
+    </style>
+</head>
+<body>
+    <!-- //先 html + css -->
+    <div class="box">
+        <div class="min"><img src="imgs/min.jpg" alt=""><div class="box3"></div></div>   
+        <div class="max"><img src="imgs/max.jpg" alt="" class= "img"></div>   
+        
+    <script>
+         //建立鼠标移动事件 让遮挡层(放大镜)随着你的鼠标位置的移动而移动 
+         var box3 = document.querySelector(".box3");    //遮挡层
+             min = document.querySelector(".min");          
+             max = document.querySelector(".max");
+            imgMax = document.querySelector(".img");
+          
+
+
+         
+         //让 box 的 定位随着你的 鼠标 位置移动而移动  所以 要获取到 鼠标的位置;
+        min.onmousemove= function (e){
+             box3.style.display= "block";
+             max.style.display= "block";
+            
+
+             //改变b的位置遮挡层的位置 随着鼠标动而动
+             e = e || window.event;
+            //  移动的距离 就是 鼠标距离文档的距离 - 盒子距离文档的距离 - 自身的一半 就能让 鼠标点在盒子的中点
+            var  x = e.pageX-min.offsetLeft-box3.offsetWidth / 2;
+            var  y = e.pageY-min.offsetTop-box3.offsetHeight / 2;
+
+             //现在 上下左右 会跑出去 设置 临界点 
+             if (x < 0){
+                 x = 0;
+             }else if (x > min.offsetWidth-box3.offsetWidth){
+                 x = min.offsetWidth-box3.offsetWidth;
+             } 
+             if (y < 0){
+                 y = 0;
+             }else if (y > min.offsetHeight-box3.offsetHeight){
+                 y = min.offsetHeight-box3.offsetHeight;
+             }
+             
+             box3.style.left =  x + "px";
+             box3.style.top =  y + "px";
+             imgMax.style.left = -2*x + "px";
+             imgMax.style.top = -2*y + "px";
+             
+             
+             
+        }
+        min.onmouseleave= function (){
+            box3.style.display= "none";
+             max.style.display= "none"; 
+           
+      }
+        
+         
+    </script>
+    
+    </div> 
+</body>
+</html>
